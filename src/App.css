@@ -1,38 +1,286 @@
-.App {
-  text-align: center;
+@import "~bootstrap/dist/css/bootstrap.min.css";
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App{
+  max-width: 800px;
+  /* background-color: #31315B; */
+  margin: auto;
+  height: 100vh;
+  padding: 0px 30px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.err{
+  color: red;
+  display: block;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header, .header__bar-left{
   display: flex;
-  flex-direction: column;
+  justify-content:space-between;
+  align-items: center;
+}
+/* login - register */
+/* --- resgister success */
+.wrap-register-success{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.register-success{
+  width: 500px;
+  background-color: #fff;
+  text-align: center;
+  align-items: center;
+  padding: 40px;
+  box-shadow: 0 0 10px 5px  #949494;
+  position: relative;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.register-success__close{
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.register-success__close-icon{
+  font-size: 30px;
+  color: #949494;
+}
+.register-success__icon{
+  color: rgba(21, 210, 33, 0.913);
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+.register-success__title{
+  font-size: 30px;
+  font-weight: 660;
+  margin-bottom: 20px;
+}
+.register-success__decs{
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.header__bar-right{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-right: -10px;
+}
+.header_login, .header_register{
+  background-color: #282851 ; /* Loại bỏ màu nền */
+  color: inherit ; /* Sử dụng màu chữ mặc định */
+  border-color: transparent ; /* Loại bỏ viền */
+  box-shadow: none ;
+  cursor: pointer;
+  padding: 8px 8px;
+  border-radius: 16px;
+  min-width: 100px;
+  margin-right: 10px;
+  color: #3d79b1;
+  font-size: 16px;
+  text-decoration: none;
+  text-align: center;
+}
+.header h1{
+  font-size: 20px;
+  color: #4e5380;
+  padding: 10px 24px;
+  text-transform: uppercase;
+}
+.clock{
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+.clock__face{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border: 1px solid #3d79b1;
+  position: relative;
+  /* background-size: contain; */
+}
+.clock__hour, .clock__miture , .clock__sencond{
+  width: 0.4px;
+  background-color: #000;
+  position: absolute;
+  left: calc(50% - 0.5px);
+  transform-origin: center bottom;
+  bottom: 20px;
+}
+.clock__hour{
+  height: 9px;
+}
+.clock__miture{
+  height: 10px;
+}
+.clock__sencond{
+  height: 11px;
+  background-color: rgb(234, 70, 70);
+}
+.tasks__now-time{
+  font-size: 34px;
+  color: #4e5380;
+}
+.add-task-form{
+  position: relative;
+  border-radius: 30px;
+  background-color: #282851;
+}
+.add-task-form input{
+  font-size: 20px;
+  border: none; /* Loại bỏ đường viền */
+  outline: none; /* Loại bỏ outline */
+  background-color: transparent; /* Loại bỏ màu nền */
+  padding: 0; /* Loại bỏ padding */
+  margin: 0; /* Loại bỏ margin */
+  padding: 20px;
+  color:#8888a8;
+  
+}
+.add-task-form input::placeholder{
+  color:#8888a8;
+}
+.add-task-form button{
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background-color: transparent;
+}
+.summit-icon{
+  font-size: 50px;
+  color: #3d79b1;
+}
+.heading__today{
+  font-size: 16px;
+  color: #4e5380;
+  padding: 10px 24px;
+  text-transform: uppercase;
+}
+.task-list{
+  list-style: none;
+  padding-left: 0;
+}
+.task-item{
+  background-color: #44446b;
+  padding: 20px 20px;
+  margin-top: 10px;
+  border-radius: 15px;
+  position: relative;
+}
+.task-title{
+  color: #8888a8;
+  font-size: 20px;
+  display: inline-block;
+  min-width: 200px;
+}
+.task-date{
+  color: #85a2ca;
+}
+.task-date__icon{
+  color: #85a2ca;
+  margin-right: 10px;
+}
+.task-click{
+  background-color: transparent;
+  border: none;
+  /* color: #85a2ca;
+  background-color:#282851; */
+  width: 40px;
+  height: 40px;
+  margin-top: -6px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  
+  transform: translateY(calc(-50% + 5px));
+}
+.task-click__delete{
+  right: 10px;
+}
+.task-click__update{
+  right: 50px;
+}
+/* form taks update */
+.task__Update-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.task__Update-input-text{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  color: #8888a8;
+  padding: 10px 0px;
+  max-width: 180px;
+}
+.task__Update-input-text::placeholder{
+  color: #8888a8;
+}
+.task__Update-input-date{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #8888a8;
+  margin-right: 22px;
+  font-size: 20px;
+}
+.task__Update-submit{
+  background-color: #3d79b1;;
+  border: none;
+  color: #282851;
+  padding: 6px;
+  border-radius: 10px;
+}
+.wrap-task-list-click{
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.task-click__icon{
+  color: #85a2ca;
+  font-size: 20px;
+}
+.task-list-click{
+  width: calc(50% - 30px);
+  font-size: 20px;
+  padding: 10px 0px;
+  margin-left: 15px;
+  margin-right: 15px;
+  float: right;
+  background-color: transparent;
+  border: none;
+  color: #85a2ca;
+  cursor: pointer;
+  background-color: #44446b;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+.task__empty-message{
+  text-align: center;
+  padding: 20px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3d79b1;
+}
+.task__empty-message span{
+  margin-left: 15px;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+.task__empty-message-icon{
+  font-size: 80px;
 }
