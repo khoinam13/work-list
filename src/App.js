@@ -6,56 +6,64 @@ import TaskList from "./TaskList";
 import AddTaskForm from "./AddTaskForm";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { useCookies } from "react-cookie";
 import "./App.css";
-//  máy chủ http
-const https = "http://localhost:3001";
+
 function App() {
-  const tasksStorage = JSON.parse(localStorage.getItem("tasks"));
-  const [tasks, setTasks] = useState(tasksStorage || []);
-  // ========== Local STORAGE ==============
-  useEffect(() => {
-    const getStorageTasks = localStorage.getItem("tasks");
-    if (getStorageTasks) {
-      setTasks(JSON.parse(getStorageTasks));
-    }
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  const [tasks, setTasks] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
-  // useEffect(() => {
-  //   fetch(`${https}/register`)
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
-
-  // ========== Local STORAGE ==============
-
+  // láy ra giá trị cookie
+  const  userName = cookies.user
+  // gắn giá trị mặc định cho tasks
+  useEffect(()=>{
+    fetch('http://localhost:3001/works',{
+      
+    })
+    .then(res => res.json())
+    .then(data => 
+      setTasks(data)
+    )
+  },[tasks])
   // thêm công việc
   const handleAddTask = (title) => {
     const newTask = {
-      id: Date.now(),
+      id: Date.now().toString(),
       title,
       date: new Date().toLocaleDateString(),
+      user: userName 
     };
-    setTasks((prev) => [...prev, newTask]);
+    fetch('http://localhost:3001/works',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'applation/json'
+      },
+      body: JSON.stringify(newTask)
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
   };
   // xoá công viêc
   const hanleDelete = (id) => {
-    const tasksNew = tasks.filter((task) => task.id !== id);
-    setTasks(tasksNew);
-    // localStorage.setItem('tasks', JSON.stringify(tasksNew))
+    fetch(`http://localhost:3001/works/${id}`,{
+      method: 'DELETE'
+    })
   };
   // xoá theo list
-  const hanleDeleteList = () => {
-    const tasksNew = tasks.filter((tasks) => !checked.includes(tasks.id));
-    setTasks(tasksNew);
+  const hanleDeleteList = async () => {
+    async function fetchDeleteCheck(){
+    await Promise.all(checked.map(async id =>{
+      const respone = await fetch(`http://localhost:3001/works/${id}`,{
+        method: 'DELETE'
+      })
+    }))
+    }
+    await fetchDeleteCheck()
   };
   // checked
   const [checked, setChecked] = useState([]);
   // hàm xử lí check
   function HandleChecked(id) {
-    // const listIdTaks = tasks.filter(tasks => tasks.id);
     if (checked.includes(id)) {
       const checkedNew = checked.filter((checked) => checked !== id);
       setChecked(checkedNew);
@@ -64,35 +72,54 @@ function App() {
     }
   }
   // sửa công việc
-  function HandleUpdateTaks(taksUpdate) {
-    setTasks(taksUpdate);
-    // localStorage.setItem('tasks', JSON.stringify(taksUpdate))
+  function HandleUpdateTaks( id,taksUpdate) {
+    // lấy chỉ số index
+    const tasksIndex = tasks.findIndex(tasks => tasks.id === id)
+    const workUpdate = {
+      ...tasks[tasksIndex],
+      ...taksUpdate
+    }
+    fetch(`http://localhost:3001/works/${id}`,{
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'applation/json'
+      },
+      body: JSON.stringify(workUpdate)
+    })
+  }
+  // xử lí đăng nhập
+
+  function handleLogin(user) {
+    // khai báo cookie
+    setCookie("user", user, {maxAge: 7 * 24 * 60 * 60});
   }
   return (
     <div className="App">
-      <Header />
-      <AddTaskForm onAddTask={handleAddTask} />
-
-      {/* =========================== xử lí routes ==================== */}
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route
-          path="/"
-          element={
-            <TaskList
-              tasks={tasks}
-              onDelete={hanleDelete}
-              onCheck={HandleChecked}
-              onDeleteList={hanleDeleteList}
-              checked={checked}
-              OnUpdateTaks={HandleUpdateTaks}
-            />
-          }
-        ></Route>
-      </Routes>
+     
+        <Header />
+        <AddTaskForm onAddTask={handleAddTask} />
+        {/* =========================== xử lí routes ==================== */}
+        <Routes>
+          <Route
+            path="/login"
+            element={<Login onLogin={handleLogin} />}
+          ></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/"
+            element={
+              <TaskList
+                tasks={tasks}
+                onDelete={hanleDelete}
+                onCheck={HandleChecked}
+                onDeleteList={hanleDeleteList}
+                checked={checked}
+                OnUpdateTaks={HandleUpdateTaks}
+              />
+            }
+          ></Route>
+        </Routes>
     </div>
   );
 }
-
 export default App;

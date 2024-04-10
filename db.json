@@ -1,5 +1,5 @@
 {
-  "register": [
+  "user": [
     {
       "id": "9d99",
       "name": "Khoinam1",
@@ -11,7 +11,38 @@
       "name": "khoinam1",
       "email": "nam2dpd05809@fpt.edu.vn",
       "password": "B12345678"
+    },
+    {
+      "id": "c989",
+      "name": "Khoinam1",
+      "email": "namdpd0522809@fpt.edu.vn",
+      "password": "B1234567"
+    },
+    {
+      "id": "db49",
+      "name": "Khoinam1",
+      "email": "namdpd05809@fpt.edu.vn2",
+      "password": "B12345678"
     }
-    
+  ],
+  "works": [
+    {
+      "id": "1712721192846",
+      "title": "đâsde",
+      "date": "10/4/2024",
+      "user": "namdpd05809@fpt.edu.vn"
+    },
+    {
+      "id": "1712761361770",
+      "title": "ewqeqweqwe",
+      "date": "10/4/2024",
+      "user": "namdpd0522809@fpt.edu.vn"
+    },
+    {
+      "id": "1712761603901",
+      "title": "eqwewqeqweqwe",
+      "date": "10/4/2024",
+      "user": "namdpd0522809@fpt.edu.vn"
+    }
   ]
 }

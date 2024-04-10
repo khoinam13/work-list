@@ -5,7 +5,11 @@ import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { faFileCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { useCookies } from "react-cookie";
 function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTaks}) {
+    // user
+    const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+    const userName = cookies.user
     // lưu biến checked
     function HandleDeleteTaks(id){
         onDelete(id)
@@ -26,18 +30,12 @@ function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTa
         title: tasks.title,
         date: tasks.date
     })
-    const HandleUpdateTaks = (e,id)=>{
+    // lấy id và giá trị mới
+    const HandleUpdateTaks = (e,id,tasksUpdate)=>{
         e.preventDefault();
-        const tasknew = [...tasks];
-        const indexTaskToUpdate = tasks.findIndex(task => task.id === id)
-        // lấy chỉ mục của phần tử trong mảng
-        // set lại phần tử đó
-        tasknew[indexTaskToUpdate] = {
-            id: id,
-            ...editTaks
-        }
+        tasksUpdate = editTaks
         // trả về mảng mới gửi props sang cha
-        OnUpdateTaks(tasknew)
+        OnUpdateTaks(id,tasksUpdate)
         setShowUpdate(null)
     }
     const handleInputChange = (e) => {
@@ -47,14 +45,19 @@ function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTa
             [name]: value
         });
     };
+     /* lọc các phần tử có user == user đã đăng nhập */
+    const userWork = tasks.filter(work => work.user === userName)
+    console.log(userWork)
   return (
     <div>
         <h2 className='heading__today'>Hôm nay</h2>
         {
-            tasks.length > 0 ? (
+            userWork.length > 0 ? (
             <div>
                 <ul className="task-list">
-                    {tasks.map((task, index) => (
+                   
+                    {userWork.map((task, index) => (
+                        
                         <li className="task-item" key={index}>
                             {showUptade === task.id ? (
                                 <form className='task__Update-form' onSubmit={(e)=>HandleUpdateTaks(e,task.id)}>

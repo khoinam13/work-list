@@ -71,8 +71,9 @@
   justify-content:space-between;
   align-items: center;
   margin-right: -10px;
+
 }
-.header_login, .header_register{
+.header_login, .header_register, .header__logout{
   background-color: #282851 ; /* Loại bỏ màu nền */
   color: inherit ; /* Sử dụng màu chữ mặc định */
   border-color: transparent ; /* Loại bỏ viền */
@@ -86,6 +87,12 @@
   font-size: 16px;
   text-decoration: none;
   text-align: center;
+}
+.header__user{
+  margin-right: 20px;
+  color: #3d79b1;
+  font-size: 30px;
+  margin-bottom: 5px;
 }
 .header h1{
   font-size: 20px;

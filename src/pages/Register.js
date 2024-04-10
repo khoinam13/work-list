@@ -5,7 +5,7 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 function Register() {
   // api register
-  const api = "http://localhost:3001/register";
+  const api = "http://localhost:3001/user";
 
   // các giá  trị
   const [registerName, SetRegisterName] = useState("");
