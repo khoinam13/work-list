@@ -1,17 +1,22 @@
 // App.js
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route ,useNavigate} from "react-router-dom";
 import Header from "./Header";
 import TaskList from "./TaskList";
 import AddTaskForm from "./AddTaskForm";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import User from "./pages/User";
 import { useCookies } from "react-cookie";
 import "./App.css";
+import Footer from "./Footer";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
+   // NAV
+   const navigate = useNavigate()
 
   // láy ra giá trị cookie
   const  userName = cookies.user
@@ -41,7 +46,6 @@ function App() {
       body: JSON.stringify(newTask)
     })
     .then(res => res.json())
-    .then(data => console.log(data))
   };
   // xoá công viêc
   const hanleDelete = (id) => {
@@ -71,6 +75,14 @@ function App() {
       setChecked((prev) => [...prev, id]);
     }
   }
+  // hàm check tất cả
+  function HandleCheckedAll(){
+      setChecked(tasks.map(taks => taks.id))
+  }
+  // bỏ check tất cả
+  function HandleRemoveCheckedAll(){
+      setChecked([])
+  }
   // sửa công việc
   function HandleUpdateTaks( id,taksUpdate) {
     // lấy chỉ số index
@@ -92,6 +104,7 @@ function App() {
   function handleLogin(user) {
     // khai báo cookie
     setCookie("user", user, {maxAge: 7 * 24 * 60 * 60});
+    navigate('/')
   }
   return (
     <div className="App">
@@ -105,6 +118,7 @@ function App() {
             element={<Login onLogin={handleLogin} />}
           ></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/user" element={<User/>}></Route>
           <Route
             path="/"
             element={
@@ -112,6 +126,8 @@ function App() {
                 tasks={tasks}
                 onDelete={hanleDelete}
                 onCheck={HandleChecked}
+                onCheckAll={HandleCheckedAll}
+                onRemoveCheckAll = {HandleRemoveCheckedAll}
                 onDeleteList={hanleDeleteList}
                 checked={checked}
                 OnUpdateTaks={HandleUpdateTaks}
@@ -119,6 +135,7 @@ function App() {
             }
           ></Route>
         </Routes>
+        <Footer></Footer>
     </div>
   );
 }

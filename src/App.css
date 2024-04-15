@@ -210,7 +210,6 @@
   cursor: pointer;
   position: absolute;
   top: 50%;
-  
   transform: translateY(calc(-50% + 5px));
 }
 .task-click__delete{
@@ -252,6 +251,7 @@
   padding: 6px;
   border-radius: 10px;
 }
+
 .wrap-task-list-click{
   margin-left: -15px;
   margin-right: -15px;
@@ -261,12 +261,12 @@
   font-size: 20px;
 }
 .task-list-click{
-  width: calc(50% - 30px);
+  width: calc(25% - 30px);
   font-size: 20px;
   padding: 10px 0px;
   margin-left: 15px;
   margin-right: 15px;
-  float: right;
+  float: left;
   background-color: transparent;
   border: none;
   color: #85a2ca;
@@ -274,6 +274,18 @@
   background-color: #44446b;
   border-radius: 10px;
   margin-top: 6px;
+  min-height: 60px;
+}
+.wrap-task-list-transfer {
+  display: flex;
+  align-items: center;
+  justify-content:space-around;
+}
+.task-list-transfer{
+  font-size: 20px;
+  border: none;
+  background-color: transparent;
+  color: #85a2ca;
 }
 .task__empty-message{
   text-align: center;
@@ -290,4 +302,55 @@
 }
 .task__empty-message-icon{
   font-size: 80px;
+}
+/* uesr */
+.gradient-custom {
+  /* fallback for old browsers */
+  background: rgb(40,40,81);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom, rgba(rgba(40,40,81,1), rgba(61,121,177,1)));
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom, rgba(rgba(40,40,81,1) , rgba(61,121,177,1)))
+  }
+.wrap-chang-password{
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+}
+.chang-password{
+  background-color: #fff;
+  text-align: center;
+  min-width: 400px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 0 10px 1px #515050;
+  
+}
+.chang-password__input{
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.chang-password__close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: transparent;
+}
+.chang-password__close-icon{
+  font-size: 20px;
+}
+.chang-password__submit{
+  border: none;
+  background-color: #282851;
+  padding: 10px;
+  color: #fff;
+  border-radius: 4px;
 }

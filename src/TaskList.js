@@ -1,14 +1,14 @@
 // TaskList.js
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { faFileCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useCookies } from "react-cookie";
-function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTaks}) {
+function TaskList({ tasks, onDelete, onCheck, onCheckAll, onRemoveCheckAll, onDeleteList, checked,  OnUpdateTaks}) {
     // user
-    const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+    const [cookies] = useCookies(["user"]);
     const userName = cookies.user
     // lưu biến checked
     function HandleDeleteTaks(id){
@@ -47,16 +47,51 @@ function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTa
     };
      /* lọc các phần tử có user == user đã đăng nhập */
     const userWork = tasks.filter(work => work.user === userName)
-    console.log(userWork)
+
+    // chọn các phần tử được hiển thị theo chỉ mục
+
+    
+    // handleCheckAll
+    function handleCheckAll (){
+        onCheckAll()
+    }
+    // remove CheckAll
+    function handleRemoveCheckAll(){
+        onRemoveCheckAll()
+    }
+    // ============ Xử lí show khi công việc quá nhiều =====================/
+    // biến lưu trữ sô trang
+    const [startIndex , SetstartIndex] = useState(0)
+    const [endIndex, SetEndIndex] = useState(5)
+    //  chỉ show 5 giá trị công việc
+    const cutFiveTaks = userWork.slice(startIndex,endIndex)
+    function handlePrev(){
+        if(startIndex === 0){
+            SetstartIndex(0)
+            SetEndIndex(5)
+        }else{
+            SetstartIndex( prev => prev - 5)
+            SetEndIndex( prev => prev - 5)
+        } 
+    }
+    function handleNext(){
+        if( userWork.length < endIndex){
+            SetstartIndex(0)
+            SetEndIndex(5)
+        }else{
+            SetstartIndex( prev => prev + 5)
+            SetEndIndex( prev => prev + 5)
+        }
+    }
   return (
     <div>
         <h2 className='heading__today'>Hôm nay</h2>
         {
-            userWork.length > 0 ? (
+           cutFiveTaks.length > 0 ? (
             <div>
                 <ul className="task-list">
                    
-                    {userWork.map((task, index) => (
+                    {cutFiveTaks.map((task, index) => (
                         
                         <li className="task-item" key={index}>
                             {showUptade === task.id ? (
@@ -79,10 +114,17 @@ function TaskList({ tasks, onDelete, onCheck, onDeleteList, checked,  OnUpdateTa
                         </li>
                     ))}
                 </ul>
+                <h2 className='heading__today'>Đang xem {startIndex+1} đến {endIndex > userWork.length ? userWork.length : endIndex} trong tổng {userWork.length}</h2>
                 <div className='wrap-task-list-click'>
+                    <button className='task-list-click' onClick={handleCheckAll}>Chọn tất cả</button>
+                    <button className='task-list-click' onClick={handleRemoveCheckAll}>Bỏ Chọn tất cả</button>
                     <button onClick={HandleDeleteList} className='task-list-click'>Xoá</button>
-                    <button className='task-list-click'>Chọn tất cả</button>
+                    <div className='task-list-click wrap-task-list-transfer' >
+                        <button onClick={handlePrev} className='task-list-transfer' ><FontAwesomeIcon icon={faChevronLeft }/></button>
+                        <button onClick={handleNext} className='task-list-transfer' ><FontAwesomeIcon icon={faChevronRight }/></button>
+                    </div>
                 </div>
+                <div className='clearfix'></div>
             </div>
             ):
         (

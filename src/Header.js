@@ -1,10 +1,11 @@
 // Header.js
 import { useEffect, useState } from 'react';
 import clockImg from './public/clock.png';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import { FaUser } from 'react-icons/fa';
 function Header() {
+  const navigate = useNavigate()
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userName = cookies.user
   const [time,setTime] = useState(new Date())
@@ -16,6 +17,9 @@ function Header() {
   } ,[])
   function handleLogout(){
     removeCookie("user")
+    navigate('/')
+
+    
   }
   return(
     <header className="header">

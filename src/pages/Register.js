@@ -111,6 +111,7 @@ function Register() {
         name: registerName,
         email: registerEmail,
         password: registerPassword,
+        image:  ""
       };
       fetch(api, {
         method: "POST",

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 function Login({ onLogin }) {
   const api = "http://localhost:3001/user";
   const [loginEmail, setLoginEmai] = useState("");
@@ -12,8 +12,11 @@ function Login({ onLogin }) {
   const [loginEmailErr, SetEmailErr] = useState("");
   const [loginPasswordErr, SetPasswordErr] = useState("");
 
-  // NAV
-  const navigate = useNavigate()
+  // check
+
+  const [loginEmailCheck, SetEmailCheck] = useState(false);
+  const [loginPasswordCheck, SetPasswordCheck] = useState(false);
+
 
   // nếu có thay đổi
   useEffect(() => {
@@ -28,35 +31,45 @@ function Login({ onLogin }) {
       .then((datas) => {
         const dataUser = datas.map((data) => data.email);
         if (dataUser.includes(loginEmail)) {
-          SetEmailErr("");
+          SetEmailCheck(true)
           //  xử lí mật khẩu
           const user = datas.find((data) => data.email === loginEmail);
           // lấy được mật khẩu đúng của tài khoản này
           const userPassword = user.password;
           if (loginPassword === userPassword) {
             // lưu trữ người dùng
-            SetPasswordErr("");
+            SetPasswordCheck(true)
           } else {
-            SetPasswordErr("Mật khẩu không đúng");
+            SetPasswordCheck(false);
           }
         } else {
-          SetEmailErr("Tài khoản không đúng");
+          SetEmailCheck(false)
         }
-      });
-  }, [loginPassword, loginEmail]);
+      }
+    );
+  },[loginEmail,loginPassword]);
   function hanndleSubmit(e) {
     e.preventDefault();
-    if(loginEmailErr === "" && loginPasswordErr ===""){
+    loginEmailCheck ? SetEmailErr('') : SetEmailErr('Tài khoản của bạn không đúng')
+    loginPasswordCheck ? SetPasswordErr('') : SetPasswordErr('Mật khẩu của bạn không đúng')
+    if(loginEmail ===''){
+      SetEmailErr('Tài khoản không được để trống');
+    }
+    if(loginPassword ===''){
+      SetPasswordErr('Mật khẩu không được để trống');
+    }
+    if(loginEmail === '' && loginPassword === ''){
+      SetEmailErr('Vui lòng không để trống Tài khoản và mật khẩu');
+      SetPasswordErr('')
+    }
+    if(loginEmailCheck === true && loginPasswordCheck === true){
         onLogin(loginEmail)
         setLoginEmai('')
         SetLoginPassword('')
-        navigate('/')
     }
     else{
       return;
     }
-    
-
   }
   return (
     <div style={{ marginTop: "20px" }}>
