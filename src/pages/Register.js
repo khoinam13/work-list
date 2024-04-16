@@ -227,7 +227,7 @@ function Register() {
           <div className="col">
             {/* <!-- Simple link --> */}
 
-            <a href="#!">Quên mật khẩu</a>
+            <a  style={{color:"#3d79b1"}} href="#!">Quên mật khẩu</a>
           </div>
         </div>
 
@@ -235,14 +235,15 @@ function Register() {
 
         <input
           type="submit"
-          className="btn btn-primary btn-block mb-4"
+          className="btn btn-block mb-4"
           value="Đăng kí"
+          style={{backgroundColor: "#3d79b1", color: "#fff"}}
         />
         {/* <!-- Register buttons --> */}
 
         <div className="text-center">
           <p>
-            <Link to={"/login"}>Đăng nhập</Link>
+            <Link style={{color:"#3d79b1"}} to={"/login"}>Đăng nhập</Link>
           </p>
         </div>
       </form>
@@ -270,6 +271,7 @@ function Register() {
           <Link
             className="button-login btn btn-primary btn-block"
             to={"/login"}
+            style={{backgroundColor: "#3d79b1", color: "#fff"}}
           >
             Đăng nhập
           </Link>

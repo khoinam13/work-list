@@ -66,7 +66,7 @@ function TaskList({ tasks, onDelete, onCheck, onCheckAll, onRemoveCheckAll, onDe
     //  chỉ show 5 giá trị công việc
     const cutFiveTaks = userWork.slice(startIndex,endIndex)
     function handlePrev(){
-        if(startIndex === 0){
+        if( startIndex <= 0){
             SetstartIndex(0)
             SetEndIndex(5)
         }else{
@@ -75,7 +75,7 @@ function TaskList({ tasks, onDelete, onCheck, onCheckAll, onRemoveCheckAll, onDe
         } 
     }
     function handleNext(){
-        if( userWork.length < endIndex){
+        if( userWork.length <= endIndex){
             SetstartIndex(0)
             SetEndIndex(5)
         }else{

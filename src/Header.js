@@ -3,11 +3,17 @@ import { useEffect, useState } from 'react';
 import clockImg from './public/clock.png';
 import {Link, useNavigate} from 'react-router-dom';
 import { useCookies } from "react-cookie";
-import { FaUser } from 'react-icons/fa';
+import { FaUser,FaHome, FaRegistered  } from 'react-icons/fa';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+
 function Header() {
   const navigate = useNavigate()
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userName = cookies.user
+  // lấy avt user
+  const [avatar, SetAvatar] = useState(null)
   const [time,setTime] = useState(new Date())
   useEffect(()=>{
     const intervalID = setInterval( ()=>{
@@ -18,9 +24,18 @@ function Header() {
   function handleLogout(){
     removeCookie("user")
     navigate('/')
-
-    
   }
+  useEffect(()=>{
+    if(cookies.user ===  undefined){
+      return
+    }
+    fetch('http://localhost:3001/user')
+    .then(res => res.json())
+    .then(data =>{
+      const userInfo = data.find(data => data.email === userName)
+      SetAvatar(userInfo.image)
+    })
+  },[avatar])
   return(
     <header className="header">
       <div className='header__bar-left'>
@@ -32,18 +47,19 @@ function Header() {
           </div>
         </div>
         <h1>Thêm công việc</h1>
+        <Link className='work-header__home' to={"/"}><FaHome className='work-header__home-icon'/></Link>
       </div>
       {/* login -register */}
       {
         userName ? (
           <div className='header__bar-right'>
-              <Link className='header__user' to="/user"><FaUser/></Link>
-              <button onClick={handleLogout} className='header__logout'>Đăng Xuất</button>
+              <Link className='header__button' to="/user">{avatar !== '' ?  <div style={{width: "50px", height: "50px", overflow: "hidden", borderRadius: "50%", backgroundImage: `url(${avatar})`, backgroundSize: "cover", backgroundRepeat : "no-repeat"}}></div>  : <FaUser/>}</Link>
+              <button onClick={handleLogout} className='header__button'><FontAwesomeIcon className='header__icon'  icon={faRightFromBracket}/></button>
           </div>
         ) : (
           <div className='header__bar-right'>
-            <Link to="/login" className='header_login'>Đăng nhập</Link>
-            <Link to="/register" className='header_register'>Đăng kí</Link>
+            <Link className='header__button' to="/login"><FontAwesomeIcon className='header__icon' icon={faRightToBracket}/></Link>
+            <Link className='header__button' to="/register"><FaRegistered className='header__icon'/></Link>
           </div>
         )
       }

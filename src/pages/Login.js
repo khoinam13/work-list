@@ -131,13 +131,13 @@ function Login({ onLogin }) {
           <div className="col">
             {/* <!-- Simple link --> */}
 
-            <a href="#!">Quên mật khẩu?</a>
+            <a href="#!" style={{color:"#3d79b1"}}>Quên mật khẩu?</a>
           </div>
         </div>
 
         {/* <!-- Submit button --> */}
 
-        <button type="submit" className="btn btn-primary btn-block mb-4">
+        <button type="submit" className="btn btn-block mb-4" style={{backgroundColor: "#3d79b1", color: "#fff"}}>
           Đăng nhập
         </button>
 
@@ -145,19 +145,19 @@ function Login({ onLogin }) {
 
         <div className="text-center">
           <p>
-            Chưa có tài khoản? <Link to={"/register"}>Đăng kí</Link>
+            Chưa có tài khoản? <Link style={{color:"#3d79b1"}} to={"/register"}>Đăng kí</Link>
           </p>
           <p>Đăng nhập với: </p>
           <button type="button" className="btn btn-link btn-floating mx-1">
-            <FaFacebook />
+            <FaFacebook style={{color:"#3d79b1"}} />
           </button>
 
           <button type="button" className="btn btn-link btn-floating mx-1">
-            <FaGoogle />
+            <FaGoogle style={{color:"#3d79b1"}} />
           </button>
 
           <button type="button" className="btn btn-link btn-floating mx-1">
-            <FaTwitter />
+            <FaTwitter style={{color:"#3d79b1"}} />
           </button>
         </div>
       </form>
